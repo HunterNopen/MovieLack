@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 0">
+    <div class="container-fluid" style="background-color: #dfd8c8; border-top: 5px solid; border-bottom: 3px solid;">
+      <nav aria-label="breadcrumb">
+          <ul class="breadcrumb" style="font-size: 25px;">
+            <li class="breadcrumb-item"><a routerLink="/home/films">Home</a></li>
+            @if(displayCategory){
+            @for (category of storeData.topLevelCategories | async; track $index) {
+              <li class="breadcrumb-item">
+                <button type="button" class="btn btn-link" style="margin: 5px;" (click)="selectOption(category)">{{category.category}}</button>
+              </li>
+            }
+          }
+        </ul>
+      </nav>
+    </div>
+  </nav>

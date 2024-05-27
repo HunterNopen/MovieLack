@@ -1,0 +1,49 @@
+@if(this.storeFilm.films.length){
+<div class="row row-cols-1 row-cols-md-3 g-5 " style="overflow: hidden; height: fit-content;">
+    @for (film of showFilms(page); track film.id) {
+    <div class="col">
+        <div class="d-flex my-border" style="border: 5px solid; height: 250px">
+            @defer (on viewport; prefetch on idle) {<img routerLink="../film/{{film.id}}" src={{film.film_img}}
+                class="w-100" style="max-width: 150px;" loading="{{page === 0 ? 'eager' : 'lazy'}}" />}
+            @placeholder(minimum 0.7s) {
+            <div class="border d-flex align-items-center justify-content-center" style="width: 150px;">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>}
+            <div class="card-body text-center">
+                <div class="container" style="height: 150px;">
+                    <h5 class="mdb-card-title"><a href="#">{{ film.title | titlecase}}</a></h5>
+                    <p class="mdb-card-text">{{ film.overview | slice:0:50}}</p>
+                    <p>{{ film.price | currency: 'USD' }}</p>
+                </div>
+                <p style="margin: 5px;"><app-rating [score]='film.rating'></app-rating></p>
+                <a class="btn btn-primary" (click)="addToCart(film)">Add To Cart!</a>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+<nav aria-label="..." class="border d-flex align-items-center justify-content-center"
+    style="margin: 25px; padding-top: 15px;">
+    <ul class="pagination">
+        <li class="page-item disabled">
+            <button type="button" class="btn btn-outline-info btn-rounded" mdbRipple rippleColor="dark"
+                style="margin-right: 15px;" (click)="previousPage()" [disabled]="page===0">Previous</button>
+        </li>
+        <li class="page-item active" aria-current="page">
+            <a class="page-link">{{page+1}}<span class="visually-hidden">(current)</span></a>
+        </li>
+        <li class="page-item">
+            <button type="button" class="btn btn-outline-info btn-rounded" mdbRipple rippleColor="dark" #nextPagee
+                style="margin-left: 15px;" (click)="nextPage()" [disabled]="!hasNextPage()">Next</button>
+        </li>
+    </ul>
+</nav>
+}@else{
+<div class="text-center justify-content-center" style="padding: 50px">
+    <h1 class="display-1 fw-bold"><span class="text-danger">Whooopps!</span></h1>
+    <p class="fs-3"> ... Nothing found... Sorry :/</p>
+    <a href="./home/films" style="border: 5px solid; padding: 5px;">Go Home</a>
+</div>
+}

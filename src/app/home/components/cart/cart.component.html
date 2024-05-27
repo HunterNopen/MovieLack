@@ -1,0 +1,104 @@
+@if(cart.cart.cartItems.length){
+<section class="h-100" style="background-color: #eee;">
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+          <div>
+            <p class="mb-0"><span class="text-muted">Sort by:</span> <a class="text-body">price <i
+                  class="fas fa-angle-down mt-1"></i></a></p>
+          </div>
+        </div>
+        <div class="card rounded-3 mb-4">
+          @for (film of cart.cart.cartItems; track $index) {
+          <div class="card-body p-4">
+            <div class="row d-flex justify-content-between align-items-center">
+              <div class="col-md-2 col-lg-2 col-xl-2">
+                <img src="{{film.film.film_img}}" class="img-fluid rounded-3">
+              </div>
+              <div class="col-md-3 col-lg-3 col-xl-3">
+                <p class="lead fw-normal mb-2">{{film.film.title}}</p>
+                <p><span class="text-muted">{{film.film.overview}}</span></p>
+                <h5 class="mb-0">{{film.film.price| currency: 'USD'}}</h5>
+                <app-rating [score]="film.film.rating"></app-rating>
+              </div>
+              <div class="col-md-3 col-lg-3 col-xl-2 d-flex" (click)="updateQuantity($event, film)">
+                <div class="btn btn-outline-dark">
+                  <span>-</span>
+                </div>
+                <div class="btn">{{film.quantity}}</div>
+                <div class="btn btn-outline-dark">
+                  <span>+</span>
+                </div>
+              </div>
+              <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                <h5 class="mb-0">{{film.amount | currency: 'USD'}}</h5>
+              </div>
+              <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                <a class="text-danger" (click)="removeItem(film)"><i class="fas fa-trash fa-lg"></i></a>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+        <form class="row gy-2 gx-3 align-items-center" [formGroup]="orderForm" (ngSubmit)="submitForm()">
+          <div class="card">
+            <div class="card-body">
+              <h3>Total amount: {{cart.cart.totalAmount | currency: 'USD'}}</h3>
+              <h3>Delivery info:</h3>
+              <mdb-form-control style="margin-bottom: 10px;">
+                <input mdbInput type="text" class="form-control" formControlName="name" />
+                <label mdbLabel class="form-label">Name</label>
+              </mdb-form-control>
+              <p class="text-danger"
+                [hidden]="this.orderForm.get('name')?.valid || !this.orderForm.get('name')?.touched">
+                *Name required!</p>
+              <mdb-form-control style="margin-bottom: 10px;">
+                <input mdbInput type="text" class="form-control" formControlName="address" />
+                <label mdbLabel class="form-label">Address</label>
+              </mdb-form-control>
+              <p class="text-danger"
+                [hidden]="this.orderForm.get('address')?.valid || !this.orderForm.get('address')?.touched">
+                *Address required!</p>
+              <mdb-form-control style="margin-bottom: 10px;">
+                <input mdbInput type="text" class="form-control" formControlName="city" />
+                <label mdbLabel class="form-label">City</label>
+              </mdb-form-control>
+              <p class="text-danger"
+                [hidden]="this.orderForm.get('city')?.valid || !this.orderForm.get('city')?.touched">
+                *City required!</p>
+              <mdb-form-control style="margin-bottom: 10px;">
+                <input mdbInput type="text" class="form-control" formControlName="state" />
+                <label mdbLabel class="form-label">State</label>
+              </mdb-form-control>
+              <p class="text-danger"
+                [hidden]="this.orderForm.get('state')?.valid || !this.orderForm.get('state')?.touched">
+                *State required!</p>
+              <mdb-form-control style="margin-bottom: 10px;">
+                <input mdbInput type="text" class="form-control" formControlName="pin" />
+                <label mdbLabel class="form-label">Pin</label>
+              </mdb-form-control>
+              <p class="text-danger" [hidden]="this.orderForm.get('pin')?.valid || !this.orderForm.get('pin')?.touched">
+                *Pin required!</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                class="btn btn-warning btn-block btn-lg" [disabled]="!orderForm.valid">Proceed to Pay</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+}@else{
+<div class="text-center justify-content-center" style="padding: 50px">
+  <h1 class="display-1 fw-bold"><span class="text-danger">Whooopps!</span></h1>
+  <p class="fs-3"> ... Looks like your cart is empty... </p>
+  <a href="./home/films" style="border: 5px solid; padding: 5px;">Go Shopping</a>
+</div>
+}

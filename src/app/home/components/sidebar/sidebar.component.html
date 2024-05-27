@@ -1,0 +1,38 @@
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+      <span class="fs-4">Categories</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="/home/films" class="nav-link active" aria-current="page">
+          Home
+        </a>
+      </li>
+      @for (category of getCategories(); track $index) {
+        <div class="dropdown">
+          <div class="container">
+            <button class="dropdown-btn" (click)="toggleDropdown($index)">{{ category.category }}
+              <i class="fa fa-caret-down"></i>
+            </button>
+            @if(!isOpen[$index] && optionSelected?.parent_category_id === $index + 1){
+              <div class="text-center">
+                {{optionSelected!.category}}
+                <i class="far fa-times-circle" (click)="optionSelected=undefined"></i>
+              </div>
+            }
+          </div>
+          @if (isOpen[$index]) {
+          <ul class="dropdown-menu">
+            @for (subCategory of getCategories(category.id); track subCategory.id) {
+            <li>
+              <button class="dropdown-item" (click)="selectOption(subCategory)">{{ subCategory.category }}</button>
+            </li>
+            }
+          </ul>
+          }
+        </div>
+      }
+    </ul>
+</div>

@@ -1,0 +1,111 @@
+<div class="border d-flex align-items-center justify-content-center" style="height: 100vh; box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 10px 12px 13px, rgba(0, 0, 0, 0.09) 5px 5px 5px;">
+    <div style="width: 70%; padding: 5rem; box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;" >
+        <div class="btn btn-primary" style="margin-bottom: 50px; " routerLink="/home">HOME</div>
+        <form class="row gy-2 gx-3 align-items-center" [formGroup]="userRegForm" (ngSubmit)="submitForm()">
+            @if(step == 1){
+            <div formGroupName="userDetails">
+                <div class="row mb-4">
+                    <div class="col">    
+                        <mdb-form-control>
+                            <input mdbInput type="text" class="form-control" formControlName="name"/>
+                            <label mdbLabel class="form-label">First name</label>
+                        </mdb-form-control>
+                        <p class="text-danger" [hidden]="this.userRegForm.get('userDetails.name')?.valid || !this.userRegForm.get('userDetails.name')?.touched">*Provide name</p>
+                    </div>
+                    <div class="col">
+                        <mdb-form-control>
+                            <input mdbInput type="text" class="form-control" formControlName="surname"/>
+                            <label mdbLabel class="form-label">Last name</label>
+                        </mdb-form-control>
+                        <p class="text-danger" [hidden]="this.userRegForm.get('userDetails.surname')?.valid || !this.userRegForm.get('userDetails.surname')?.touched">*Provide the surname</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <mdb-form-control>
+                        <input mdbInput type="email" class="form-control" formControlName="email"/>
+                        <label mdbLabel class="form-label">Email</label>
+                    </mdb-form-control>
+                    <p class="text-danger" [hidden]="this.userRegForm.get('userDetails.email')?.valid || !this.userRegForm.get('userDetails.email')?.touched">*Provide the email in format smth&#64;smth.com</p>
+                </div>
+            </div>
+            }
+
+            @if(step == 2){
+            <div formGroupName="addressDetails">
+                <div class="row mb-4">
+                <div class="col">
+                    <mdb-form-control>
+                        <input mdbInput type="text" class="form-control" formControlName="address"/>
+                        <label mdbLabel class="form-label">Address</label>
+                    </mdb-form-control>
+                    <p class="text-danger" [hidden]="this.userRegForm.get('addressDetails.address')?.valid || !this.userRegForm.get('addressDetails.address')?.touched">*Provide address</p>
+                </div>
+                <div class="col">
+                <mdb-form-control>
+                    <input mdbInput type="text" class="form-control" formControlName="state"/>
+                    <label mdbLabel class="form-label">State</label>
+                </mdb-form-control>
+                <p class="text-danger" [hidden]="this.userRegForm.get('addressDetails.state')?.valid || !this.userRegForm.get('addressDetails.city')?.touched">*Provide state</p>
+                </div>
+
+                <div class="col">
+                <mdb-form-control>
+                    <input mdbInput type="text" class="form-control" formControlName="city"/>
+                    <label mdbLabel class="form-label">City</label>
+                </mdb-form-control>
+                <p class="text-danger" [hidden]="this.userRegForm.get('addressDetails.city')?.valid || !this.userRegForm.get('addressDetails.city')?.touched">*Provide city</p>
+                </div>
+            </div>
+            </div>
+            }
+
+            @if(step == 3){
+            <div formGroupName="passwordDetails">
+                <div class="row mb-4">
+                <div class="col">
+                <mdb-form-control>
+                    <input mdbInput type="text" class="form-control" formControlName="pin"/>
+                    <label mdbLabel class="form-label">PIN</label>
+                </mdb-form-control>
+                <p class="text-danger" [hidden]="this.userRegForm.get('passwordDetails.pin')?.valid || !this.userRegForm.get('passwordDetails.pin')?.touched">*Provide pin in format ####</p>
+                </div>
+
+                <div class="col">
+                <mdb-form-control>
+                    <input mdbInput type="text" [type]="showPswd1 ? 'text' : 'password'" class="form-control" formControlName="password"/>
+                    <label mdbLabel class="form-label">Password</label>
+                </mdb-form-control>
+                @if(showPswd1){
+                    <button type="button" class="far fa-eye-slash" (click)="showPassword(1)"></button>
+                }@else {<button type="button" class="far fa-eye" (click)="showPassword(1)"></button>}
+                <p class="text-danger" [hidden]="this.userRegForm.get('passwordDetails.password')?.valid || !this.userRegForm.get('passwordDetails.password')?.touched">*Provide password, should consist of 8 letter, 1 is digit</p>
+                </div>    
+
+                <div class="col">
+                <mdb-form-control>
+                    <input mdbInput type="password" [type]="showPswd2 ? 'text' : 'password'" class="form-control" formControlName="confirmPassword"/>
+                    <label mdbLabel class="form-label">Confirm Password</label>
+                </mdb-form-control>
+                @if(showPswd2){
+                    <button type="button" class="far fa-eye-slash" (click)="showPassword(2)"></button>
+                }@else {<button type="button" class="far fa-eye" (click)="showPassword(2)"></button>}
+                <p class="text-danger" [hidden]="!this.userRegForm.get('passwordDetails')?.errors?.['passwordMismatch'] || !this.userRegForm.get('passwordDetails.confirmPassword')?.touched">*Provide password again</p>
+                </div>
+            </div>
+            </div>
+            }
+
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-info" (click)="previousPage()" [disabled]="step == 1">Previous</button>
+                <button type="button" class="btn btn-info" (click)="nextPage()" [disabled]="step == 3">Next</button>
+                @if(step == 3){
+                    <button type="submit" class="btn btn-success">Submit</button>
+                }
+            </div>
+            @if(alertMessage){
+                <div class="container" [ngClass]="alertType === 0 ? 'text-success' : alertType === 1 ? 'text-warning bg-dark' : alertType === 2 ? 'text-danger bg-dark' : null">{{alertMessage}}</div>
+            }
+        </form>
+        <a routerLink="../login" class="btn btn-info" style="margin-top: 50px;">Login</a>
+    </div>
+</div>

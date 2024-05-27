@@ -1,0 +1,79 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-bottom: 0; ">
+  <div class="container-fluid justify-content-between" style="background-color: var(--primary-color);">
+    <div class="d-flex">
+      <a class="navbar-brand me-2 mb-1 d-flex align-items-center">
+        <img src="../../../../assets/images/logo.jpg" height="50" alt="" loading="lazy" style="margin-top: 2px;" />
+      </a>
+      <h1 class="d-flex align-items-center justify-content-center">MovieLack</h1>
+    </div>
+
+    <ul class="navbar-nav flex-row d-none d-md-flex">
+      <li class="nav-item me-3 me-lg-1 active">
+        @if(displayOptions){
+        <form class="input-group w-auto my-auto d-none d-sm-flex">
+          <select class="form-control" style="min-width: auto" #categoryOption>
+            @if(!selectedGenre){
+            <option value="" selected disabled>Please select a genre</option>
+            }
+            @for (cat of getCategories()| async; track $index) {
+            <option value='{{cat.id}}'>{{cat.category}}</option>
+            }
+          </select>
+          <input #search autocomplete="off" type="search" class="form-control rounded" placeholder="Search"
+            style="min-width: 500px;" />
+          <button class="btn btn-primary" type="button" (click)="onSearchClicked(categoryOption.value, search.value)"><i
+              class="fas fa-search"></i></button>
+        </form>
+        }
+    </ul>
+
+    <ul class="navbar-nav flex-row">
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <span><i class="fas fa-heart" style="color: #FFFFFF;"></i></span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">
+          <span class="badge badge-pill bg-danger" style="color: #FFFFFF;">{{ cart.cart.totalItems }}</span>
+          <span routerLink="./cart" style="cursor: pointer;"><i class="fas fa-shopping-cart"
+              style="color: #FFFFFF;"></i></span>
+        </a>
+      </li>
+      @if(!isUserLogged){
+      <li class="nav-item">
+        <button type="button" class="btn btn-link px-3 me-2" routerLink="../login">
+          Login
+        </button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-primary me-3" routerLink="../registration">
+          Sign up for free
+        </button>
+      </li>
+      }@else if (isUserLogged) {
+        <li mdbDropdown class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbarDropdownMenuLink"
+            role="button"
+            mdbDropdownToggle
+            aria-expanded="false"
+            style="color: #FFFFFF; margin-right: 20px;"
+          >
+            <i class="fas fa-user"></i>
+          </a>
+          <ul
+            mdbDropdownMenu
+            class="dropdown-menu"
+            aria-labelledby="navbarDropdownMenuLink"
+          >
+            <li>
+              <a class="dropdown-item" (click)="logout()">Log Out</a>
+            </li>
+            </ul>
+        </li>
+    }
+    </ul>
+  </div>
+</nav>

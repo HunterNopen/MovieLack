@@ -1,0 +1,9 @@
+.my-border img {
+    transition: .5s ease;
+}
+
+.my-border img:hover {
+    box-shadow: 0 0 0 10px #54B4D3;
+    transition: .5s ease;
+    cursor: pointer;
+}

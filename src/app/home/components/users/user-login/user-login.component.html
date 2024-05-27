@@ -1,0 +1,32 @@
+<div class="border d-flex align-items-center justify-content-center"
+    style="height: 100vh; box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 10px 12px 13px, rgba(0, 0, 0, 0.09) 5px 5px 5px;">
+    <div
+        style="width: 70%; padding: 5rem; box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;;">
+        <div class="btn btn-primary" style="margin-bottom: 50px;" routerLink="/home">HOME</div>
+        <form class="row gy-2 gx-3 align-items-center" [formGroup]="userLogForm" (ngSubmit)="submitForm()">
+            <div class="container" style="margin-bottom: 30px;">
+                <mdb-form-control>
+                    <input mdbInput type="text" class="form-control" formControlName="email" />
+                    <label mdbLabel class="form-label">Email</label>
+                </mdb-form-control>
+                <p class="text-danger"
+                    [hidden]="this.userLogForm.get('email')?.valid || !this.userLogForm.get('email')?.touched">*Provide
+                    email</p>
+            </div>
+            <div class="container">
+                <mdb-form-control>
+                    <input mdbInput type="password" class="form-control" formControlName="password" />
+                    <label mdbLabel class="form-label">Password</label>
+                </mdb-form-control>
+                <p class="text-danger"
+                    [hidden]="this.userLogForm.get('password')?.valid || !this.userLogForm.get('password')?.touched">
+                    *Password required!</p>
+                <button class="btn btn-success" (click)="submitForm()" style="margin-top: 25px; margin-right: 25px">SUBMIT</button><div class="btn btn-info" style="margin-top: 50px;" routerLink="../registration">REGISTER</div>
+            </div>
+        </form>
+        @if(alertMessage){
+        <div class="container"
+            [ngClass]="alertType === 0 ? 'text-success' : alertType === 1 ? 'text-warning bg-dark' : alertType === 2 ? 'text-danger bg-dark' : null">
+            {{alertMessage}}</div>
+        }
+    </div>
