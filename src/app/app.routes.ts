@@ -10,8 +10,8 @@ export const routes: Routes = [
     { path: 'home', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent), children:
         [
             { path: 'films', component: FilmGalleryComponent },
-            { path: 'film/:id', component: FilmDetailsComponent },
-            { path: 'cart', component: CartComponent },
+            { path: 'film/:id', loadComponent: () => import('./home/components/film-details/film-details.component').then(m => m.FilmDetailsComponent) },
+            { path: 'cart', loadComponent: () => import('./home/components/cart/cart.component').then(m => m.CartComponent) },
         ]
      },
     { path: 'registration',  loadComponent: () => import('./home/components/users/user-registration/user-registration.component').then(m => m.UserRegistrationComponent) },

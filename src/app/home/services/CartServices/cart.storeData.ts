@@ -9,6 +9,7 @@ import { Film } from "../../types/films.type";
 export class CartStoreData extends StoreData<Cart> {
 
     constructor() {
+        if (typeof sessionStorage !== 'undefined') {
         const savedCart = sessionStorage.getItem('cart');
         if(savedCart){
             super(JSON.parse(savedCart));
@@ -18,6 +19,14 @@ export class CartStoreData extends StoreData<Cart> {
             totalAmount: 0,
             totalItems: 0
         });
+        }
+        }
+        else{
+            super({
+                cartItems: [],
+                totalAmount: 0,
+                totalItems: 0
+            });
         }
 
     }

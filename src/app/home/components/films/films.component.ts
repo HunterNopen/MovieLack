@@ -32,7 +32,6 @@ export class FilmsComponent implements OnDestroy{
       this.maxPages = Math.ceil(r.length / this.maxPerPage);
     }
     ));
-    console.log(this.filmsOnPage);
   }
 
   ngOnDestroy(): void {

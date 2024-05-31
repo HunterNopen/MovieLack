@@ -43,6 +43,7 @@ export class UserService {
   }
 
   loadToken(){
+    if (typeof localStorage !== 'undefined') {
     const token: string | null = localStorage.getItem('token');
     const expiry: string | null = localStorage.getItem('expiry');
     if(!token || !expiry){
@@ -74,6 +75,7 @@ export class UserService {
       }
     }
   }
+  }
 
   private setAutoLogoutTimer(duration: number){
     this.autoLogoutTimer = setTimeout(()=>{
@@ -82,6 +84,7 @@ export class UserService {
   }
 
   activateToken(token: loginToken){
+    if (typeof localStorage !== 'undefined') {
     localStorage.setItem('token', token.token);
     localStorage.setItem('expiry', new Date(Date.now() + token.expiresInSeconds * 1000).toISOString());
     localStorage.setItem('name', token.user.name);
@@ -94,5 +97,6 @@ export class UserService {
     this.isLogged.next(true);
     this.loggedInUser.next(token.user);
     this.setAutoLogoutTimer(token.expiresInSeconds * 1000);
+  }
   }
 }
