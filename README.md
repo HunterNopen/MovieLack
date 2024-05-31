@@ -1,5 +1,17 @@
 # MovieLack
 
+MovieLack is a film rental service.<br />
+Project is focused on utilizing Angular functionality. Such as responsive, dynamic, two-way binding wep-page. Pipes. Reactive forms and form validation. Login and registration of user. Session and cookies for logged-in/guest users. Prefetching and lazy-loading implementation. Teiggers. Pagination, sidebar and navbar with categories. Ratings. Search-bar for key words. Cart to add your order and check out. Asynchronous view and loading. Routing.
+
+**The project was made using such technologies as:**
+- Angular v17
+- TypeScript 4.5
+- MySql as Database
+- JavaScript (NodeJS, expressJs...) for back-end connection with db
+- MdbBootstrap as SCSS
+
+## About Project
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
 
 ## Development server
